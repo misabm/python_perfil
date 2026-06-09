@@ -1,5 +1,13 @@
 import random
 
+# ─────────────────────────────────────────────────────────────────────────────
+# cartas.py
+# Banco de cartas do jogo Perfil.
+# Para adicionar mais cartas: basta incluir novos dicionários na lista `cartas`
+# seguindo o mesmo formato {"tipo": ..., "nome": ..., "dicas": [...]}.
+# Responsável por adicionar cartas: Allyn
+# ─────────────────────────────────────────────────────────────────────────────
+
 cartas = [
     {
         "tipo": "LUGAR",
@@ -8,7 +16,7 @@ cartas = [
             "Perca sua vez",
             "Sou um ponto turístico",
             "As pessoas costumam realizar piqueniques aqui",
-            "Sou considerado o “pulmão verde” dos nova-iorquinos",
+            "Sou considerado o pulmão verde dos nova-iorquinos",
             "Sou o maior parque urbano do mundo",
             "Estou localizado no distrito de Manhattan, em Nova York",
             "Avance 3 casas",
@@ -21,7 +29,7 @@ cartas = [
             "Sou cenário de muitos filmes e programas de televisão",
             "Fui inaugurado em 1857",
             "Possuo uma área de 3,41 km²",
-            "Um dos meus pontos famosos é conhecido por “Strawberry Fields”",
+            "Um dos meus pontos famosos é conhecido por Strawberry Fields",
             "Tenho 23 estátuas",
             "Recebo aproximadamente 42 milhões de visitantes por ano",
             "Frederick Law Olmsted foi um dos responsáveis pela minha construção",
@@ -45,7 +53,7 @@ cartas = [
             "Fernando Collor de Mello e José Sarney ocuparam meu cargo em 1990",
             "A maioria dos países me tem",
             "George Washington foi o meu primeiro nos Estados Unidos",
-            "Tenho origem no latim e significo “aquele que se senta à frente”",
+            "Tenho origem no latim e significo aquele que se senta à frente",
             "No Brasil sou Chefe de Estado e Comandante Supremo das Forças Armadas",
             "Sou eleito por um sistema majoritário",
             "Represento uma nação",
@@ -61,7 +69,7 @@ cartas = [
             "Avance 3 casas",
             "Estou disponível na plataforma Netflix",
             "Minha história tem início com o desaparecimento de Will Byers",
-            "Tenho algo a ver com outra dimensão, chamada de “mundo invertido”",
+            "Tenho algo a ver com outra dimensão, chamada de mundo invertido",
             "Dustin é o nome de um dos meus personagens",
             "Aqui a atriz Millie Bobby Brown interpreta Eleven",
             "Escolha 1 jogador para avançar 1 casa",
@@ -73,7 +81,7 @@ cartas = [
             "Sou ambientada na cidade fictícia de Hawkins",
             "Sou baseada nos anos 80",
             "Aqui acontece o Baile do Floco de Neve",
-            "Fui criada pelos “Duffer Brothers”",
+            "Fui criada pelos Duffer Brothers",
             "Ganhei o prêmio de série do ano na MTV Awards em 2017",
             "Um palpite a qualquer hora",
             "Minha trilha sonora foi criada por integrantes da banda Survive",
@@ -90,7 +98,7 @@ cartas = [
             "Sou uma falha ou erro",
             "Volte 2 casas",
             "Minha correção evita invasões de vírus de computador",
-            "Vanellope, do filme “Detona Ralph”, é um exemplo",
+            "Vanellope, do filme Detona Ralph, é um exemplo",
             "Falaram muito sobre mim às vésperas do ano 2000",
             "Sou uma gíria para expressar confusão ou esquecimento momentâneo",
             "Posso causar travamento ou mau funcionamento",
@@ -145,7 +153,7 @@ cartas = [
             "Sou um fluído corporal",
             "O coração é responsável por me bombear",
             "Escolha 1 jogador para voltar 1 casa",
-            "Um dos meus tipos é conhecido como “AB”",
+            "Um dos meus tipos é conhecido como AB",
             "Circulo através de veias e artérias",
             "Sou viscoso",
             "Escolha 1 jogador para avançar 3 casas",
@@ -222,7 +230,7 @@ cartas = [
             "Geralmente sou feita por meio das redes sociais",
             "Ganhei popularidade durante a pandemia da Covid-19",
             "Muitos artistas recorrem a mim",
-            "Significo “ao vivo” na tradução do inglês",
+            "Significo ao vivo na tradução do inglês",
             "Sou conhecida mundialmente",
             "Já causei críticas a Gusttavo Lima",
             "Avance 3 casas",
@@ -245,7 +253,7 @@ cartas = [
             "Uma de minhas funções é proteger os órgãos",
             "Armazeno a maior parte de cálcio do organismo",
             "Meu formato pode variar de acordo com a espécie",
-            "No filme “Viva - A vida é uma Festa”, apareço como personagem",
+            "No filme Viva - A vida é uma Festa, apareço como personagem",
             "Praticar atividades físicas me mantém forte",
             "Perca sua vez",
             "Os animais invertebrados não me têm",
@@ -274,12 +282,12 @@ cartas = [
             "Perca sua vez",
             "O nome de meu pai é Fa Zhou",
             "Um de meus companheiros no filme é o grilo Gri-Li",
-            "A música “Reflection” de Christina Aguilera toca no meu filme",
+            "A música Reflection de Christina Aguilera toca no meu filme",
             "A atriz Liu Yifei me interpreta na adaptação em live action",
             "Sou dublada originalmente pela atriz Ming-Na",
             "Sou inspirada em uma lenda chinesa",
             "Fiz uma aparição na série Princesinha Sofia",
-            "Meu nome significa “flor de magnólia” em chinês",
+            "Meu nome significa flor de magnólia em chinês",
             "Fui destaque na edição 100 da revista Disney Adventures",
             "Fui ferida por Shan Yu",
             "Escolha 1 jogador para avançar 2 casas",
@@ -289,15 +297,15 @@ cartas = [
         "tipo": "ANO",
         "nome": "2017",
         "dicas": [
-            "É lançada a música “Despacito”",
+            "É lançada a música Despacito",
             "Neymar é contratado pelo PSG",
             "Sou um ano do século 21",
             "Escolha 1 jogador para avançar 3 casas",
             "Sou um ano antes da Copa do Mundo da Rússia",
             "Donald Trump assume a presidência dos EUA",
             "Um palpite a qualquer hora",
-            "É lançado o filme “It - A Coisa” no Brasil",
-            "Acontece o “Tiroteio de Las Vegas Strip”",
+            "É lançado o filme It - A Coisa no Brasil",
+            "Acontece o Tiroteio de Las Vegas Strip",
             "Forte terremoto atinge o México, deixando mais de 300 mortos",
             "Morre o jornalista Marcelo Rezende",
             "Desprende-se de Larsen C, na Antártida, um dos maiores icebergs",
@@ -373,7 +381,7 @@ cartas = [
             "Sou um mutante",
             "Uso um capacete",
             "Fui criado e publicado pela editora Marvel Comics",
-            "Sou o “Mestre do Magnetismo”",
+            "Sou o Mestre do Magnetismo",
             "Sou interpretado pelo ator Michael Fassbender",
             "Sou conhecido também como Erik Lehnsherr",
             "Posso voar",
@@ -399,7 +407,7 @@ cartas = [
             "Volte 3 casas",
             "Sou utilizado na maior parte do mundo",
             "Avance 1 casa",
-            "Por aqui é comum encontrar a hashtag #OpenToWork",
+            "Por aqui é comum encontrar a hashtag OpenToWork",
             "Posso estabelecer conexões com outras pessoas",
             "Ofereço cursos gratuitos",
             "Estou praticamente no mundo todo, com mais de meio bilhão de usuários",
@@ -413,11 +421,11 @@ cartas = [
             "Reid Hoffman é um dos meus fundadores",
             "Posso servir como um currículo digital",
             "Minha sede fica em Mountain View, na Califórnia",
-            "Perca sua vez",
-            "Ivete Sangalo esteve de pijama por aqui"
         ],
     },
 ]
 
+
 def pegar_carta():
+    """Retorna uma carta aleatória do banco de cartas."""
     return random.choice(cartas)

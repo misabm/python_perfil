@@ -1,5 +1,12 @@
 from jogo.engine import iniciar_jogo
 
+# ─────────────────────────────────────────────────────────────────────────────
+# main.py — ponto de entrada do programa (original preservado)
+#
+# TODO – deixar o menu mais bonito (responsável tarefa 2)
+# TODO – integrar ranking de vitórias (Mari, tarefa 6)
+# ─────────────────────────────────────────────────────────────────────────────
+
 def menu():
     vitorias = 0
     while True:
