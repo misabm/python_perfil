@@ -4,6 +4,7 @@ import random
 from jogo.jogador import Jogador, Computador
 from jogo.cartas import pegar_carta
 from jogo.tabuleiro import criar_tabuleiro
+from jogo.ranking import Ranking
 
 POSICAO_FINAL = 130
 
@@ -400,6 +401,14 @@ def iniciar_jogo() -> bool:
 
     vencedor = _loop_jogo(jogadores)
 
-    #registrar vitória no ranking aqui
+    # Monta o resultado: vencedor primeiro, demais ordenados por posição no tabuleiro
+    outros = sorted([j for j in jogadores if j is not vencedor],
+                    key=lambda j: j.posicao, reverse=True)
+    resultado = [(vencedor.nome, True)] + [(j.nome, False) for j in outros]
+
+    ranking = Ranking()
+    ranking.mostrar_pontos_partida(resultado)
+    ranking.registrar_partida(resultado)
+    ranking.mostrar_ranking()
 
     return vencedor.eh_humano
