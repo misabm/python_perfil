@@ -3,7 +3,7 @@ import random
 
 from jogo.jogador import Jogador, Computador
 from jogo.cartas import pegar_carta
-from jogo.tabuleiro import criar_tabuleiro
+from jogo.tabuleiro import criar_tabuleiro, desenhar_tabuleiro
 from jogo.ranking import Ranking
 
 POSICAO_FINAL = 130
@@ -41,6 +41,7 @@ def _exibir_posicoes(jogadores: list):
         barra = "█" * progresso + "░" * (30 - progresso)
         print(f"  │ {j.nome[:14]:<14} {j.posicao:3d}/130  {barra} │")
         print("  └─────────────────────────────────────────────┘")
+
 
 def _aplicar_efeitos(texto: str, jogador_atual: Jogador, todos: list) -> bool:
     t = texto.lower()
@@ -109,6 +110,47 @@ def _efeito_escolher_jogador(texto: str, jogador_atual: Jogador, todos: list):
     alvo.posicao = max(0, alvo.posicao + sinal * num)
     verbo = "avançou" if sinal == 1 else "voltou"
     print(f"  ➜  {alvo.nome} {verbo} {num} casa(s) → posição {alvo.posicao}")
+
+
+def _dica_bloqueada_no_modo_especial(texto: str) -> bool:
+    """Na casa '?', efeitos especiais são ignorados e a dica deve ser trocada."""
+    t = texto.lower()
+    bloqueios = (
+        "avance",
+        "volte",
+        "perca sua vez",
+        "um palpite a qualquer hora",
+        "escolha 1 jogador para",
+    )
+    return any(item in t for item in bloqueios)
+
+
+def _mostrar_dica_especial(carta: dict, indice: int) -> bool:
+    """
+    Mostra a dica da rodada especial.
+    Retorna True se a dica pode valer normalmente, False se ela for bloqueada.
+    """
+    dica = carta["dicas"][indice - 1]
+    if _dica_bloqueada_no_modo_especial(dica):
+        print(f"  Dica {indice}: {dica}")
+        print("  Essa dica tem efeito de carta e não vale na casa '?'. Escolha outro número.")
+        return False
+
+    print(f"  Dica {indice}: {dica}")
+    return True
+
+
+def _casas_por_acerto_no_especial(numero_da_dica: int) -> int:
+    ganhos = {1: 10, 2: 8, 3: 6, 4: 4, 5: 2}
+    return ganhos[numero_da_dica]
+
+
+def _numeros_validos_no_especial(carta: dict, usados: set) -> list:
+    """Retorna números de dica ainda disponíveis e sem efeitos especiais."""
+    return [
+        idx for idx in range(1, 21)
+        if idx not in usados and not _dica_bloqueada_no_modo_especial(carta["dicas"][idx - 1])
+    ]
 
 def _verificar_palpite_qualquer_hora(jogador_atual, todos, carta, num_dica):
     for outro in todos:
@@ -233,66 +275,102 @@ def rodada_extra(jogador: Jogador, todos: list):
         return None
 
     carta = pegar_carta()
-    ganhos = {0: 10, 1: 8, 2: 6, 3: 4, 4: 2}
+    dicas_escolhidas = set()
+    dicas_validas = 0
 
     print(f"{'═' * 54}")
     print(f"  ❓  CARTA ESPECIAL  —  {jogador.nome}")
     print(f"  Tipo: {carta['tipo']}")
-    print("  Regras: até 5 dicas, apenas 1 palpite.")
+    print("  Regras: até 5 dicas válidas, apenas 1 palpite.")
+    print("  Dicas com efeitos de carta são bloqueadas aqui.")
     print("  Acerto: 1ª=10 | 2ª=8 | 3ª=6 | 4ª=4 | 5ª=2 casas")
     print(f"  {'═' * 54}")
 
-    for tentativa in range(5):
+    while dicas_validas < 5:
+        numero_da_dica = dicas_validas + 1
+
         if jogador.eh_humano:
-            if tentativa == 4:
-                print(f"5ª tentativa: você é obrigado a palpitar.")
-                idx = _ler_inteiro("  Escolha a última dica (1-20): ",
-                                   validos=list(range(1, 21)))
-                print(f"  Dica {idx}: {carta['dicas'][idx - 1]}")
-                palpite = _ler_texto("  Palpite final: ")
+            print(f"Dicas escolhidas até agora: {sorted(dicas_escolhidas) if dicas_escolhidas else 'nenhuma'}")
+
+            if numero_da_dica == 5:
+                print("5ª dica válida: escolha um número e depois o palpite será obrigatório.")
+                escolha = _ler_inteiro("  Escolha a última dica (1-20): ", validos=list(range(1, 21)))
+            else:
+                print(f"Dica válida {numero_da_dica}/5. Digite um número de 1 a 20 ou 0 para palpitar:")
+                escolha = _ler_inteiro("  > ", validos=list(range(0, 21)))
+
+                if escolha == 0:
+                    palpite = _ler_texto("  Seu palpite: ")
+                    jogador.palpites += 1
+                    if palpite.lower() == carta["nome"].lower():
+                        casas = _casas_por_acerto_no_especial(numero_da_dica)
+                        jogador.posicao += casas
+                        print(f"  ✅  Acertou! +{casas} casas → posição {jogador.posicao}")
+                        return jogador if jogador.posicao >= POSICAO_FINAL else None
+                    print(f"  ❌  Errou! Era: {carta['nome']}. Não anda nada.")
+                    return None
+
+            if escolha in dicas_escolhidas:
+                print("  Esse número já foi escolhido nessa rodada especial. Tente outro.")
+                continue
+
+            if not _mostrar_dica_especial(carta, escolha):
+                continue
+
+            dicas_escolhidas.add(escolha)
+            dicas_validas += 1
+            if dicas_validas == 5:
+                palpite = _ler_texto("  Palpite final obrigatório: ")
                 jogador.palpites += 1
                 if palpite.lower() == carta["nome"].lower():
-                    jogador.posicao += ganhos[4]
-                    print(f"  ✅  Acertou! +{ganhos[4]} casas → posição {jogador.posicao}")
+                    casas = _casas_por_acerto_no_especial(5)
+                    jogador.posicao += casas
+                    print(f"  ✅  Acertou! +{casas} casas → posição {jogador.posicao}")
                     return jogador if jogador.posicao >= POSICAO_FINAL else None
-                else:
-                    print(f"  ❌  Errou! Era: {carta['nome']}. Não anda nada.")
+                print(f"  ❌  Errou! Era: {carta['nome']}. Não anda nada.")
                 return None
-
-            print(f"Tentativa {tentativa + 1}/5. Dica (1-20) ou 0 para palpitar:")
-            escolha = _ler_inteiro("  > ", validos=list(range(0, 21)))
-            if escolha == 0:
-                palpite = _ler_texto("  Seu palpite: ")
-                jogador.palpites += 1
-                if palpite.lower() == carta["nome"].lower():
-                    jogador.posicao += ganhos[tentativa]
-                    print(f"  ✅  Acertou! +{ganhos[tentativa]} casas → posição {jogador.posicao}")
-                    return jogador if jogador.posicao >= POSICAO_FINAL else None
-                else:
-                    print(f"  ❌  Errou! Era: {carta['nome']}. Não anda nada.")
-                return None
-
-            print(f"  Dica {escolha}: {carta['dicas'][escolha - 1]}")
-            _aplicar_efeitos(carta["dicas"][escolha - 1], jogador, todos)
 
         else:
             time.sleep(0.5)
-            chance = 0.10 + 0.18 * tentativa
-            if tentativa == 4 or random.random() < chance:
-                acertou = random.random() < chance or tentativa == 4
-                print(f"  🤖  {jogador.nome} vai palpitar na tentativa {tentativa + 1}...")
+            numeros_disponiveis = _numeros_validos_no_especial(carta, dicas_escolhidas)
+            if not numeros_disponiveis:
+                print("  Não há mais dicas válidas nessa carta especial. Rodada encerrada sem avanço.")
+                return None
+
+            if numero_da_dica == 5:
+                escolha = numeros_disponiveis[0]
+                dicas_escolhidas.add(escolha)
+                _mostrar_dica_especial(carta, escolha)
+                dicas_validas += 1
+                chance = min(0.08 + 0.18 * (numero_da_dica - 1), 0.95)
+                acertou = random.random() < chance
+                print(f"  🤖  {jogador.nome} é obrigado a palpitar.")
                 time.sleep(0.4)
                 if acertou:
-                    jogador.posicao += ganhos[tentativa]
-                    print(f"  ✅  Acertou! +{ganhos[tentativa]} casas → posição {jogador.posicao}")
+                    casas = _casas_por_acerto_no_especial(5)
+                    jogador.posicao += casas
+                    print(f"  ✅  Acertou! +{casas} casas → posição {jogador.posicao}")
                     return jogador if jogador.posicao >= POSICAO_FINAL else None
-                else:
-                    print(f"  ❌  Errou! Era: {carta['nome']}")
+                print(f"  ❌  Errou! Era: {carta['nome']}")
                 return None
-            else:
-                dica = carta["dicas"][tentativa]
-                print(f"  🤖  {jogador.nome} pede dica {tentativa + 1}: {dica}")
-                _aplicar_efeitos(dica, jogador, todos)
+
+            chance = 0.08 + 0.18 * (numero_da_dica - 1)
+            if random.random() < chance:
+                acertou = random.random() < chance
+                print(f"  🤖  {jogador.nome} vai palpitar na dica válida {numero_da_dica}...")
+                time.sleep(0.4)
+                if acertou:
+                    casas = _casas_por_acerto_no_especial(numero_da_dica)
+                    jogador.posicao += casas
+                    print(f"  ✅  Acertou! +{casas} casas → posição {jogador.posicao}")
+                    return jogador if jogador.posicao >= POSICAO_FINAL else None
+                print(f"  ❌  Errou! Era: {carta['nome']}")
+                return None
+
+            escolha = numeros_disponiveis[0]
+            dicas_escolhidas.add(escolha)
+            _mostrar_dica_especial(carta, escolha)
+            dicas_validas += 1
 
     return None
 
@@ -352,8 +430,7 @@ def _loop_jogo(jogadores: list) -> Jogador:
     while True:
         jogador_atual = jogadores[turno % len(jogadores)]
         _exibir_posicoes(jogadores)
-
-        #exibir tabuleiro visual aqui
+        desenhar_tabuleiro(jogadores, especiais, total_casas=POSICAO_FINAL)
 
         if jogador_atual.posicao in especiais:
             vencedor = rodada_extra(jogador_atual, todos=jogadores)
@@ -381,13 +458,16 @@ def iniciar_jogo() -> bool:
     # TODO – adicionar opção Tutorial aqui
     # TODO – integrar ranking após o jogo 
     """
-    print("  ╔══════════════════════════════════════════╗")
-    print("  ║            🎲  PERFIL  🎲               ║")
-    print("  ╠══════════════════════════════════════════╣")
-    print("  ║  1 - Solo (1 jogador)                    ║")
-    print("  ║  2 - Multiplayer (2 a 6 jogadores)       ║")
-    print("  ║  3 - VS Computador                       ║")
-    print("  ╚══════════════════════════════════════════╝")
+    print("  ╔════════════════════════════════════════════════════╗")
+    print("  ║                   🎲  PERFIL  🎲                   ║")
+    print("  ╠════════════════════════════════════════════════════╣")
+    print("  ║  1 - Solo                                          ║")
+    print("  ║      Jogue sozinho e avance pelo tabuleiro.        ║")
+    print("  ║  2 - Multiplayer                                   ║")
+    print("  ║      De 2 a 6 jogadores, cada um com seu nick.     ║")
+    print("  ║  3 - VS Computador                                 ║")
+    print("  ║      Enfrente o computador em dificuldade livre.   ║")
+    print("  ╚════════════════════════════════════════════════════╝")
 
     op = _ler_inteiro("  Modo: ", validos=[1, 2, 3])
 
