@@ -1,172 +1,506 @@
-# ranking.py — Sistema de Ranking do Jogo Perfil
-#
-# Como usar:
-#   from jogo.ranking import Ranking
-#   r = Ranking()
-#   r.registrar_partida([("Ana", True), ("Bob", False), ("Carlos", False)])
-#   r.mostrar_ranking()
-
 import json
 import os
 
-# Arquivo onde os dados ficam salvos entre as partidas
+
 ARQUIVO_RANKING = "ranking.json"
 
-# Pontos ganhos por posição ao final da partida
+
 PONTOS_POR_POSICAO = {
-    1: 100,   # Vencedor
-    2: 60,    # 2º lugar
-    3: 40,    # 3º lugar
-    4: 25,    # 4º lugar
-    5: 15,    # 5º lugar
-    6: 10,    # 6º lugar
+
+    1: 100,
+    2: 60,
+    3: 40,
+    4: 25,
+    5: 15,
+    6: 10
+
 }
 
 
 class JogadorRanking:
-    """Guarda o histórico de pontos de um jogador."""
 
     def __init__(self, nome):
+
         self.nome = nome
+
         self.pontos_totais = 0
+
         self.partidas_jogadas = 0
+
         self.vitorias = 0
 
-    def adicionar_pontos(self, pontos):
-        """Soma pontos e conta mais uma partida."""
+    def adicionar_pontos(
+        self,
+        pontos
+    ):
+
         self.pontos_totais += pontos
+
         self.partidas_jogadas += 1
 
-    def para_dict(self):
-        """Converte o jogador para dicionário (necessário para salvar no JSON)."""
+    def taxa_vitoria(
+        self
+    ):
+
+        if self.partidas_jogadas == 0:
+
+            return 0
+
+        return round(
+
+            (
+
+                self.vitorias
+
+                /
+
+                self.partidas_jogadas
+
+            )
+
+            *
+
+            100,
+
+            1
+
+        )
+
+    def para_dict(
+        self
+    ):
+
         return {
-            "nome": self.nome,
-            "pontos_totais": self.pontos_totais,
-            "partidas_jogadas": self.partidas_jogadas,
-            "vitorias": self.vitorias,
+
+            "nome":
+            self.nome,
+
+            "pontos_totais":
+            self.pontos_totais,
+
+            "partidas_jogadas":
+            self.partidas_jogadas,
+
+            "vitorias":
+            self.vitorias
+
         }
 
     @classmethod
-    def do_dict(cls, dados):
-        """Cria um JogadorRanking a partir de um dicionário lido do JSON."""
-        jogador = cls(dados["nome"])
-        jogador.pontos_totais = dados.get("pontos_totais", 0)
-        jogador.partidas_jogadas = dados.get("partidas_jogadas", 0)
-        jogador.vitorias = dados.get("vitorias", 0)
+    def do_dict(
+        cls,
+        dados
+    ):
+
+        jogador = cls(
+
+            dados.get(
+                "nome",
+                "Desconhecido"
+            )
+
+        )
+
+        jogador.pontos_totais = (
+
+            dados.get(
+
+                "pontos_totais",
+
+                0
+
+            )
+
+        )
+
+        jogador.partidas_jogadas = (
+
+            dados.get(
+
+                "partidas_jogadas",
+
+                0
+
+            )
+
+        )
+
+        jogador.vitorias = (
+
+            dados.get(
+
+                "vitorias",
+
+                0
+
+            )
+
+        )
+
         return jogador
 
 
 class Ranking:
-    """Gerencia o ranking completo: carrega, salva e exibe."""
 
     def __init__(self):
-        # Dicionário: nome do jogador -> JogadorRanking
+
         self.jogadores = {}
-        self.carregar_ranking()
 
-    def carregar_ranking(self):
-        """Lê o arquivo ranking.json e carrega os dados."""
-        try:
-            if os.path.exists(ARQUIVO_RANKING):
-                with open(ARQUIVO_RANKING, "r", encoding="utf-8") as f:
-                    lista = json.load(f)
-                for item in lista:
-                    j = JogadorRanking.do_dict(item)
-                    self.jogadores[j.nome] = j
-        except (json.JSONDecodeError, IOError):
-            # Se o arquivo estiver corrompido, começa do zero sem quebrar
-            self.jogadores = {}
+        self.carregar()
 
-    def salvar_ranking(self):
-        """Salva todos os dados no arquivo ranking.json."""
-        try:
-            lista = [j.para_dict() for j in self.jogadores.values()]
-            with open(ARQUIVO_RANKING, "w", encoding="utf-8") as f:
-                json.dump(lista, f, ensure_ascii=False, indent=2)
-        except IOError:
-            print("  Aviso: não foi possível salvar o ranking.")
+    def carregar(
+        self
+    ):
 
-    def registrar_partida(self, resultado):
-        """
-        Registra os pontos de uma partida.
+        if not os.path.exists(
+            ARQUIVO_RANKING
+        ):
 
-        Parâmetro resultado: lista de tuplas (nome, eh_vencedor)
-            - O primeiro item é o vencedor (posição 1)
-            - Os demais estão em ordem decrescente de posição no tabuleiro
-            - Jogadores chamados "Computador" são ignorados
-
-        Exemplo: [("Ana", True), ("Bob", False), ("Carlos", False)]
-        """
-        for pos_ranking, (nome, eh_vencedor) in enumerate(resultado, start=1):
-            # O Computador não entra no ranking (não tem identidade persistente)
-            if nome.lower() == "computador":
-                continue
-
-            pontos = PONTOS_POR_POSICAO.get(pos_ranking, 5)
-
-            # Cria o jogador no ranking se ainda não existir
-            if nome not in self.jogadores:
-                self.jogadores[nome] = JogadorRanking(nome)
-
-            self.jogadores[nome].adicionar_pontos(pontos)
-
-            if eh_vencedor:
-                self.jogadores[nome].vitorias += 1
-
-        self.salvar_ranking()
-
-    def mostrar_ranking(self):
-        """Exibe o ranking em ordem decrescente de pontos totais."""
-        # Filtra só jogadores humanos (exclui Computador, caso haja algum salvo)
-        humanos = [j for j in self.jogadores.values() if j.nome.lower() != "computador"]
-
-        if not humanos:
-            print("\n  Nenhum dado de ranking ainda. Jogue uma partida!")
             return
 
-        # Ordena do maior para o menor
-        lista = sorted(humanos, key=lambda j: j.pontos_totais, reverse=True)
+        try:
 
-        print("\n  ╔══════════════════════════════════════════════════════╗")
-        print("  ║                  🏆  RANKING  🏆                    ║")
-        print("  ╠═════╦══════════════════╦═════════╦══════════╦═══════╣")
-        print("  ║ Pos ║ Jogador          ║ Pontos  ║ Partidas ║ Vitór.║")
-        print("  ╠═════╬══════════════════╬═════════╬══════════╬═══════╣")
+            with open(
 
-        for i, j in enumerate(lista, start=1):
-            nome_fmt = j.nome[:16].ljust(16)
-            print(f"  ║ {i:<3} ║ {nome_fmt} ║ {j.pontos_totais:<7} ║ {j.partidas_jogadas:<8} ║ {j.vitorias:<5} ║")
+                ARQUIVO_RANKING,
 
-        print("  ╚═════╩══════════════════╩═════════╩══════════╩═══════╝")
+                "r",
 
-    def mostrar_pontos_partida(self, resultado):
-        """Mostra os pontos ganhos nesta partida antes de salvar."""
-        print("\n  ── Pontos desta partida ──")
-        for pos_ranking, (nome, _) in enumerate(resultado, start=1):
-            if nome.lower() == "computador":
+                encoding="utf8"
+
+            ) as arquivo:
+
+                dados = json.load(
+                    arquivo
+                )
+
+        except (
+
+            json.JSONDecodeError,
+
+            OSError
+
+        ):
+
+            self.jogadores = {}
+
+            return
+
+        for item in dados:
+
+            jogador = (
+
+                JogadorRanking
+                .do_dict(
+                    item
+                )
+
+            )
+
+            if (
+
+                jogador.nome
+                .lower()
+
+                !=
+
+                "computador"
+
+            ):
+
+                self.jogadores[
+                    jogador.nome
+                ] = jogador
+
+    def salvar(
+        self
+    ):
+
+        try:
+
+            with open(
+
+                ARQUIVO_RANKING,
+
+                "w",
+
+                encoding="utf8"
+
+            ) as arquivo:
+
+                json.dump(
+
+                    [
+
+                        j.para_dict()
+
+                        for j
+
+                        in self.jogadores.values()
+
+                    ],
+
+                    arquivo,
+
+                    indent=4,
+
+                    ensure_ascii=False
+
+                )
+
+        except OSError:
+
+            print(
+                "\nFalha ao salvar ranking."
+            )
+
+    def registrar_partida(
+        self,
+        resultado
+    ):
+
+        for posicao, (
+            nome,
+            vencedor
+        ) in enumerate(
+
+            resultado,
+
+            start=1
+
+        ):
+
+            if (
+
+                nome
+                .lower()
+
+                ==
+
+                "computador"
+
+            ):
+
                 continue
-            pontos = PONTOS_POR_POSICAO.get(pos_ranking, 5)
-            print(f"  {pos_ranking}º lugar: {nome}  →  +{pontos} pontos")
+
+            if (
+
+                nome
+
+                not in
+
+                self.jogadores
+
+            ):
+
+                self.jogadores[
+                    nome
+                ] = (
+
+                    JogadorRanking(
+                        nome
+                    )
+
+                )
+
+            jogador = (
+
+                self.jogadores[
+                    nome
+                ]
+
+            )
+
+            pontos = (
+
+                PONTOS_POR_POSICAO.get(
+
+                    posicao,
+
+                    5
+
+                )
+
+            )
+
+            jogador.adicionar_pontos(
+                pontos
+            )
+
+            if vencedor:
+
+                jogador.vitorias += 1
+
+        self.salvar()
+
+    def mostrar_pontos_partida(
+        self,
+        resultado
+    ):
+
+        print()
+
+        print(
+            "PONTUAÇÃO"
+        )
+
+        print(
+            "─" * 40
+        )
+
+        for posicao, (
+            nome,
+            _
+        ) in enumerate(
+
+            resultado,
+
+            start=1
+
+        ):
+
+            if (
+
+                nome
+                .lower()
+
+                ==
+
+                "computador"
+
+            ):
+
+                continue
+
+            pontos = (
+
+                PONTOS_POR_POSICAO.get(
+
+                    posicao,
+
+                    5
+
+                )
+
+            )
+
+            print(
+
+                f"{posicao}º "
+
+                +
+
+                nome
+
+                +
+
+                f" (+{pontos})"
+
+            )
+
+        print()
+
+    def mostrar_ranking(
+        self
+    ):
+
+        jogadores = sorted(
+
+            self.jogadores.values(),
+
+            key=lambda j:
+
+            (
+
+                j.pontos_totais,
+
+                j.vitorias
+
+            ),
+
+            reverse=True
+
+        )
+
+        if not jogadores:
+
+            print(
+                "\nSem ranking ainda."
+            )
+
+            return
+
+        print()
+
+        print(
+            "═"
+            * 82
+        )
+
+        print(
+            "RANKING"
+            .center(
+                82
+            )
+        )
+
+        print(
+            "═"
+            * 82
+        )
+
+        print(
+
+            f'{"#":<4}'
+
+            f'{"Nome":<20}'
+
+            f'{"Pts":<10}'
+
+            f'{"Partidas":<12}'
+
+            f'{"Vitórias":<12}'
+
+            f'{"Taxa":<10}'
+
+        )
+
+        print(
+            "─"
+            * 82
+        )
+
+        for i, j in enumerate(
+            jogadores,
+            start=1
+        ):
+
+            print(
+
+                f"{i:<4}"
+
+                f"{j.nome[:18]:<20}"
+
+                f"{j.pontos_totais:<10}"
+
+                f"{j.partidas_jogadas:<12}"
+
+                f"{j.vitorias:<12}"
+
+                f"{str(j.taxa_vitoria())+'%':<10}"
+
+            )
+
+        print()
+
+        print(
+            "═"
+            * 82
+        )
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Exemplo de uso (executar diretamente para testar)
-# ─────────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    print("=== Teste do sistema de ranking ===\n")
 
     r = Ranking()
 
-    # Simula uma partida com 3 jogadores
-    print("Partida 1: Ana vence, Bob fica em 2º, Carlos em 3º")
-    r.mostrar_pontos_partida([("Ana", True), ("Bob", False), ("Carlos", False)])
-    r.registrar_partida([("Ana", True), ("Bob", False), ("Carlos", False)])
-
-    # Simula outra partida
-    print("\nPartida 2: Bob vence, Ana fica em 2º")
-    r.mostrar_pontos_partida([("Bob", True), ("Ana", False)])
-    r.registrar_partida([("Bob", True), ("Ana", False)])
-
-    print()
     r.mostrar_ranking()
-    print("\nDados salvos em:", ARQUIVO_RANKING)

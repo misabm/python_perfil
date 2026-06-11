@@ -239,6 +239,8 @@ cartas = [
             "A banda BTS me realizou com venda de ingressos",
             "Se apresento conteúdo inadequado, posso ser derrubada",
             "Posso ficar gravada ou não",
+            "Sou uma alternativa para eventos presenciais",
+            "Perca sua vez",
         ],
     },
     {
@@ -423,9 +425,552 @@ cartas = [
             "Minha sede fica em Mountain View, na Califórnia",
         ],
     },
+    {
+"tipo":"DIGITAL",
+"nome":"DISCORD",
+"dicas":[
+"Sou uma plataforma digital",
+"Tenho servidores",
+"Sou muito usado por jogadores",
+"Permito chamadas de voz",
+"Tenho canais",
+"Volte 1 casa",
+"Posso compartilhar tela",
+"Tenho bots",
+"Sou gratuito",
+"Escolha 1 jogador para avançar 1 casa",
+"Tenho versão mobile",
+"Fiquei popular durante a pandemia",
+"Possuo cargos",
+"Posso transmitir jogos",
+"Fui criado em 2015",
+"Minha logo é azul",
+"Tenho chats privados",
+"Avance 2 casas",
+"Meu fundador é Jason Citron",
+"Sou concorrente do TeamSpeak"
 ]
+},
+
+{
+"tipo":"COISA",
+"nome":"CAFÉ",
+"dicas":[
+"Sou consumido no mundo todo",
+"Posso ser quente",
+"Tenho cafeína",
+"Sou comum pela manhã",
+"Perca sua vez",
+"Posso ser expresso",
+"Sou produzido no Brasil",
+"Tenho aroma marcante",
+"Posso vir com leite",
+"Escolha 1 jogador para voltar 1 casa",
+"Tenho versão descafeinada",
+"Sou uma bebida",
+"Meu grão é torrado",
+"Tenho sabor amargo",
+"Avance 1 casa",
+"Posso causar insônia",
+"Sou servido em cafeterias",
+"Faço parte do cotidiano",
+"Tenho cor escura",
+"Meu cultivo ocorre em fazendas"
+]
+},
+
+{
+"tipo":"PESSOA",
+"nome":"BATMAN",
+"dicas":[
+"Sou um personagem",
+"Tenho capa",
+"Protejo uma cidade",
+"Não tenho poderes",
+"Sou bilionário",
+"Escolha 1 jogador para avançar 2 casas",
+"Tenho um mordomo",
+"Meu símbolo é um morcego",
+"Já fui interpretado por vários atores",
+"Uso tecnologia",
+"Minha cidade é Gotham",
+"Meu nome verdadeiro é Bruce Wayne",
+"Combato o Coringa",
+"Tenho um carro famoso",
+"Avance 2 casas",
+"Faço parte da DC",
+"Sou conhecido como cavaleiro das trevas",
+"Perca sua vez",
+"Tenho um parceiro chamado Robin",
+"Sou o Batman"
+]
+},
+
+{
+"tipo":"COISA",
+"nome":"PIANO",
+"dicas":[
+"Sou um instrumento",
+"Tenho teclas",
+"Posso ser grande",
+"Sou usado em apresentações",
+"Escolha 1 jogador para avançar 1 casa",
+"Produzo notas musicais",
+"Tenho cordas",
+"Fui criado há séculos",
+"Posso ser digital",
+"Tenho pedais",
+"Avance 1 casa",
+"Sou usado em música clássica",
+"Tenho versão de cauda",
+"Posso acompanhar cantores",
+"Tenho teclas brancas e pretas",
+"Perca sua vez",
+"Sou muito usado em estudos musicais",
+"Posso ser afinado",
+"Meu som é harmônico",
+"Sou tocado com as mãos"
+]
+},
+
+{
+"tipo":"ANO",
+"nome":"2007",
+"dicas":[
+"Ocorri no século XXI",
+"Foi lançado o primeiro iPhone",
+"Escolha 1 jogador para voltar 1 casa",
+"O Brasil sediaria Copa anos depois",
+"Tenho soma igual 9",
+"Sou posterior a 2006",
+"Avance 2 casas",
+"Steve Jobs fez apresentação histórica",
+"Sou anterior a 2008",
+"Sou um ano comum",
+"Tenho quatro dígitos",
+"Perca sua vez",
+"Marco início dos smartphones modernos",
+"Tenho dois zeros",
+"Meu último dígito é 7",
+"Tenho um número repetido",
+"Fiquei conhecido pela tecnologia",
+"Sou recente",
+"Tenho um 2",
+"Sou 2007"
+]
+},
+
+{
+"tipo":"LUGAR",
+"nome":"TORRE EIFFEL",
+"dicas":[
+"Sou turístico",
+"Estou na Europa",
+"Recebo milhões de visitantes",
+"Fico em uma capital",
+"Tenho estrutura metálica",
+"Escolha 1 jogador para avançar 2 casas",
+"Sou francesa",
+"Tenho elevadores",
+"Avance 3 casas",
+"Fui inaugurada no século XIX",
+"Tenho mais de 300 metros",
+"Meu nome é de um engenheiro",
+"Estou em Paris",
+"Tenho iluminação noturna",
+"Perca sua vez",
+"Sou um símbolo nacional",
+"Fui construída para exposição",
+"Sou famosa mundialmente",
+"Apareço em filmes",
+"Sou a Torre Eiffel"
+]
+},
+{
+"tipo":"PESSOA",
+"nome":"HOMEM-ARANHA",
+"dicas":[
+"Sou um personagem",
+"Escolha 1 jogador para avançar 1 casa",
+"Tenho sentidos apurados",
+"Uso máscara",
+"Vivo em Nova York",
+"Tenho poderes",
+"Fui mordido",
+"Volte 1 casa",
+"Combato vilões",
+"Meu uniforme geralmente é vermelho",
+"Já participei dos Vingadores",
+"Tenho um lançador de teias",
+"Sou jovem",
+"Perca sua vez",
+"Meu criador foi Stan Lee",
+"Tenho amizade com Ned",
+"Minha tia se chama May",
+"Meu alter ego é estudante",
+"Meu nome verdadeiro é Peter Parker",
+"Sou o Homem-Aranha"
+]
+},
+
+{
+"tipo":"PESSOA",
+"nome":"SHERLOCK HOLMES",
+"dicas":[
+"Sou um personagem",
+"Resolvo mistérios",
+"Uso lógica",
+"Tenho um companheiro",
+"Avance 2 casas",
+"Moro em Londres",
+"Sou detetive",
+"Meu criador foi Arthur Conan Doyle",
+"Uso observação",
+"Tenho fama mundial",
+"Perca sua vez",
+"Já fui adaptado para filmes",
+"Uso dedução",
+"Tenho um inimigo famoso",
+"Meu amigo é Watson",
+"Fumo cachimbo",
+"Sou britânico",
+"Costumo investigar crimes",
+"Escolha 1 jogador para voltar 1 casa",
+"Sou Sherlock Holmes"
+]
+},
+
+{
+"tipo":"DIGITAL",
+"nome":"YOUTUBE",
+"dicas":[
+"Sou digital",
+"Tenho vídeos",
+"Permito comentários",
+"Escolha 1 jogador para avançar 1 casa",
+"Tenho criadores de conteúdo",
+"Sou muito acessado",
+"Permito transmissões",
+"Tenho anúncios",
+"Posso monetizar",
+"Avance 2 casas",
+"Tenho inscritos",
+"Fui criado em 2005",
+"Tenho botão vermelho",
+"Tenho vídeos curtos",
+"Perca sua vez",
+"Sou do Google",
+"Tenho bilhões de usuários",
+"Posso ensinar coisas",
+"Meu símbolo é um play",
+"Sou o YouTube"
+]
+},
+
+{
+"tipo":"DIGITAL",
+"nome":"SPOTIFY",
+"dicas":[
+"Sou um serviço digital",
+"Tenho playlists",
+"Reproduzo áudio",
+"Escolha 1 jogador para avançar 2 casas",
+"Tenho versão gratuita",
+"Tenho versão premium",
+"Sou usado em celulares",
+"Posso tocar músicas",
+"Tenho podcasts",
+"Avance 1 casa",
+"Minha logo é verde",
+"Fui criado na Suécia",
+"Tenho recomendações",
+"Perca sua vez",
+"Posso baixar conteúdo",
+"Sou muito popular",
+"Uso streaming",
+"Tenho milhões de músicas",
+"Posso tocar offline",
+"Sou o Spotify"
+]
+},
+
+{
+"tipo":"DIGITAL",
+"nome":"CHATGPT",
+"dicas":[
+"Sou digital",
+"Respondo perguntas",
+"Uso inteligência artificial",
+"Tenho conversas",
+"Escolha 1 jogador para voltar 1 casa",
+"Posso ajudar estudos",
+"Posso escrever textos",
+"Avance 1 casa",
+"Posso gerar ideias",
+"Tenho versões diferentes",
+"Perca sua vez",
+"Posso programar",
+"Sou usado no navegador",
+"Fui lançado em 2022",
+"Sou treinado com dados",
+"Posso resumir conteúdos",
+"Sou um assistente virtual",
+"Fui criado pela OpenAI",
+"Uso IA generativa",
+"Sou o ChatGPT"
+]
+},
+
+{
+"tipo":"COISA",
+"nome":"CHOCOLATE",
+"dicas":[
+"Sou consumido no mundo inteiro",
+"Posso ser doce",
+"Tenho versões diferentes",
+"Escolha 1 jogador para avançar 1 casa",
+"Posso derreter",
+"Sou feito com cacau",
+"Posso ser amargo",
+"Sou comum em sobremesas",
+"Avance 1 casa",
+"Tenho barras",
+"Perca sua vez",
+"Posso ser branco",
+"Tenho origem antiga",
+"Sou vendido em lojas",
+"Posso virar bebida",
+"Tenho açúcar",
+"Sou popular na Páscoa",
+"Posso ser recheado",
+"Sou um alimento",
+"Sou chocolate"
+]
+},
+
+{
+"tipo":"COISA",
+"nome":"FOGUETE",
+"dicas":[
+"Posso voar",
+"Uso combustível",
+"Sou veloz",
+"Escolha 1 jogador para avançar 2 casas",
+"Posso chegar ao espaço",
+"Avance 3 casas",
+"Tenho motores",
+"Levo cargas",
+"Posso ser reutilizado",
+"Tenho lançamento vertical",
+"Perca sua vez",
+"Tenho estágio",
+"Uso engenharia avançada",
+"Posso levar satélites",
+"Sou usado por agências espaciais",
+"Posso levar astronautas",
+"Tenho grande potência",
+"Sou usado em missões",
+"Meu destino pode ser órbita",
+"Sou um foguete"
+]
+},
+
+{
+"tipo":"LUGAR",
+"nome":"COLISEU",
+"dicas":[
+"Sou um lugar histórico",
+"Fico na Europa",
+"Recebo turistas",
+"Escolha 1 jogador para voltar 1 casa",
+"Tenho formato oval",
+"Sou muito antigo",
+"Fico na Itália",
+"Avance 2 casas",
+"Recebi eventos",
+"Tenho ruínas",
+"Fui palco de batalhas",
+"Perca sua vez",
+"Sou romano",
+"Tenho arquibancadas",
+"Sou famoso mundialmente",
+"Tenho milhares de visitantes",
+"Fui construído há séculos",
+"Estou em Roma",
+"Sou patrimônio histórico",
+"Sou o Coliseu"
+]
+},
+
+{
+"tipo":"LUGAR",
+"nome":"MACHU PICCHU",
+"dicas":[
+"Sou turístico",
+"Fico na América do Sul",
+"Estou em altitude elevada",
+"Escolha 1 jogador para avançar 1 casa",
+"Tenho ruínas",
+"Sou patrimônio histórico",
+"Avance 2 casas",
+"Tenho ligação com povos antigos",
+"Perca sua vez",
+"Recebo turistas",
+"Fui redescoberto",
+"Estou no Peru",
+"Tenho montanhas",
+"Sou um sítio arqueológico",
+"Sou muito fotografado",
+"Tenho pedra",
+"Tenho vista famosa",
+"Fui construído pelos incas",
+"Sou uma cidade antiga",
+"Sou Machu Picchu"
+]
+},
+
+{
+"tipo":"ANO",
+"nome":"1969",
+"dicas":[
+"Sou um ano",
+"Sou do século XX",
+"Escolha 1 jogador para avançar 1 casa",
+"Avance 2 casas",
+"Tenho quatro dígitos",
+"Aconteceu algo histórico",
+"Fui antes de 1970",
+"Perca sua vez",
+"Meu último número é 9",
+"Marquei a exploração espacial",
+"Neil Armstrong ficou famoso",
+"Tenho soma 25",
+"Sou conhecido mundialmente",
+"Fui um ano importante",
+"Milhões acompanharam um evento",
+"Foi transmitido pela TV",
+"O homem pisou na Lua",
+"Apollo 11 aconteceu",
+"Foi corrida espacial",
+"Sou 1969"
+]
+},
+
+{
+"tipo":"ANO",
+"nome":"2020",
+"dicas":[
+"Sou recente",
+"Sou do século XXI",
+"Perca sua vez",
+"Escolha 1 jogador para voltar 1 casa",
+"Fiquei conhecido mundialmente",
+"Muitas pessoas ficaram em casa",
+"Avance 1 casa",
+"Tive trabalho remoto",
+"Tive ensino remoto",
+"Tenho dois números repetidos",
+"Comecei uma década",
+"Usei máscaras",
+"Tive videoconferências",
+"Tive mudanças globais",
+"Fiquei marcado",
+"Minha soma é 4",
+"Tenho dois zeros",
+"Sou posterior a 2019",
+"Fui antes de 2021",
+"Sou 2020"
+]
+},
+]
+
+def validar_cartas():
+
+    nomes = set()
+
+    for indice, carta in enumerate(cartas):
+
+        if carta["nome"] in nomes:
+
+            raise ValueError(
+                f"Carta duplicada: {carta['nome']}"
+            )
+
+        nomes.add(
+            carta["nome"]
+        )
+
+        if len(carta["dicas"]) != 20:
+
+            raise ValueError(
+                f"Carta {indice+1} inválida"
+            )
+
+        if len(
+            [
+                d
+                for d
+                in carta["dicas"]
+                if d.strip()
+            ]
+        ) != 20:
+
+            raise ValueError(
+                f"Dicas vazias em {carta['nome']}"
+            )
+
+
+_cartas_usadas = []
 
 
 def pegar_carta():
-    """Retorna uma carta aleatória do banco de cartas."""
-    return random.choice(cartas)
+
+    global _cartas_usadas
+
+    if len(
+        _cartas_usadas
+    ) >= len(
+        cartas
+    ):
+
+        _cartas_usadas.clear()
+
+    disponiveis = [
+
+        carta
+
+        for carta
+
+        in cartas
+
+        if carta
+        not in
+        _cartas_usadas
+
+    ]
+
+    sorteada = random.choice(
+        disponiveis
+    )
+
+    _cartas_usadas.append(
+        sorteada
+    )
+
+    return sorteada
+
+    TIPOS_VALIDOS = {
+
+    "PESSOA",
+
+    "LUGAR",
+
+    "COISA",
+
+    "DIGITAL",
+
+    "ANO"
+
+}
+
+

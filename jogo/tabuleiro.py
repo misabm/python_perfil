@@ -1,70 +1,249 @@
 import random
 
 
+TOTAL_CASAS = 130
+CASAS_ESPECIAIS = 25
+LARGURA = 10
+
+
 def criar_tabuleiro():
-    especiais = random.sample(range(1, 130), 25)
-    return especiais
 
+    return set(
 
-def desenhar_tabuleiro(jogadores: list, especiais: list, total_casas: int = 130):
-    """
-    Mostra um tabuleiro em zigue-zague com:
-    - casas especiais '?'
-    - peões dos jogadores
-    - casa final destacada
-    """
-    largura = 10
-    ocupacao = {}
+        random.sample(
 
-    for indice, jogador in enumerate(jogadores, start=1):
-        posicao = min(max(jogador.posicao, 0), total_casas)
-        marcador = jogador.nome[:2].upper() if jogador.nome else str(indice)
-        ocupacao.setdefault(posicao, []).append(marcador)
+            range(
+                6,
+                126
+            ),
 
-    legenda_jogadores = " | ".join(
-        f"{(jogador.nome[:2].upper() if jogador.nome else str(indice))}={jogador.nome}"
-        for indice, jogador in enumerate(jogadores, start=1)
+            CASAS_ESPECIAIS
+
+        )
+
     )
 
-    print("\n╔" + "═" * 78 + "╗")
-    print("║" + " TABULEIRO ".center(78) + "║")
-    print("╠" + "═" * 78 + "╣")
-    print("║ Legenda: ? = casa especial | [AB] = peão do jogador".ljust(79) + "║")
-    print(f"║ {legenda_jogadores[:76].ljust(76)} ║")
-    print("╚" + "═" * 78 + "╝")
+
+def _peoes(
+    jogadores,
+    casa
+):
+
+    peoes = []
+
+    for jogador in jogadores:
+
+        if jogador.posicao == casa:
+
+            peoes.append(
+
+                jogador.nome[
+                    :2
+                ].upper()
+
+            )
+
+    return peoes
+
+
+def _montar_casa(
+    casa,
+    jogadores,
+    especiais,
+    total
+):
+
+    peoes = _peoes(
+        jogadores,
+        casa
+    )
+
+    if casa >= total:
+
+        texto = "🏆"
+
+    elif casa in especiais:
+
+        texto = " ?"
+
+    else:
+
+        texto = (
+            f"{casa:03}"
+        )
+
+    if peoes:
+
+        if len(
+            peoes
+        ) == 1:
+
+            texto += peoes[0]
+
+        else:
+
+            texto += (
+                "+"
+                +
+                str(
+                    len(
+                        peoes
+                    )
+                )
+            )
+
+    return f"[{texto:^7}]"
+
+
+def desenhar_tabuleiro(
+    jogadores,
+    especiais,
+    total_casas=130
+):
+
+    print()
+
+    print(
+        "═"
+        *
+        120
+    )
+
+    print(
+        "PERFIL"
+        .center(
+            120
+        )
+    )
+
+    print(
+        "═"
+        *
+        120
+    )
+
+    legenda = []
+
+    for jogador in jogadores:
+
+        legenda.append(
+
+            f"{jogador.nome[:2].upper()}"
+
+            +
+
+            " = "
+
+            +
+
+            jogador.nome
+
+        )
+
+    print()
+
+    print(
+        " | ".join(
+            legenda
+        )
+    )
+
+    print(
+        "? = rodada especial"
+    )
+
+    print()
 
     linhas = []
-    for inicio in range(1, total_casas + 1, largura):
-        fim = min(inicio + largura - 1, total_casas)
-        linha = list(range(inicio, fim + 1))
-        if len(linhas) % 2 == 1:
+
+    for inicio in range(
+
+        1,
+
+        total_casas
+        +
+        1,
+
+        LARGURA
+
+    ):
+
+        fim = min(
+
+            inicio
+            +
+            (
+                LARGURA
+                -
+                1
+            ),
+
+            total_casas
+
+        )
+
+        linha = list(
+
+            range(
+
+                inicio,
+
+                fim
+                +
+                1
+
+            )
+
+        )
+
+        if (
+
+            len(
+                linhas
+            )
+            %
+            2
+
+        ):
+
             linha.reverse()
-        linhas.append(linha)
 
-    for linha in reversed(linhas):
-        blocos = []
+        linhas.append(
+            linha
+        )
+
+    linhas.reverse()
+
+    for linha in linhas:
+
         for casa in linha:
-            if casa == total_casas:
-                base = " FIM "
-            elif casa in especiais:
-                base = "  ?  "
-            else:
-                base = f"{casa:>4} "
 
-            jogadores_na_casa = ocupacao.get(casa, [])
-            if jogadores_na_casa:
-                if len(jogadores_na_casa) == 1:
-                    peao = jogadores_na_casa[0][:2].ljust(2)
-                else:
-                    peao = str(len(jogadores_na_casa)).rjust(2)
-                bloco = f"[{peao}]"
-            else:
-                bloco = "     "
+            print(
 
-            blocos.append(f"{base}{bloco}")
+                _montar_casa(
 
-        print(" ".join(blocos))
+                    casa,
 
-    aguardando = ocupacao.get(0, [])
-    if aguardando:
-        print("\nNa largada:", ", ".join(aguardando))
+                    jogadores,
+
+                    especiais,
+
+                    total_casas
+
+                ),
+
+                end=""
+
+            )
+
+        print()
+
+        print()
+
+    print(
+        "═"
+        *
+        120
+    )
+
+    print()
