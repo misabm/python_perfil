@@ -34,3 +34,13 @@ Ter o **Python 3.x** instalado na sua máquina.
 1. Clone o repositório para a sua máquina local:
 ```bash
    git clone [https://github.com/misabm/python_perfil.git](https://github.com/misabm/python_perfil.git)
+```
+2. Acesse a pasta do projeto:
+```bash
+   cd python_perfil
+```
+3. Execute o arquivo principal:
+```bash
+   python main.py
+```
+
