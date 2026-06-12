@@ -1,13 +1,5 @@
 import random
 
-# ─────────────────────────────────────────────────────────────────────────────
-# cartas.py
-# Banco de cartas do jogo Perfil.
-# Para adicionar mais cartas: basta incluir novos dicionários na lista `cartas`
-# seguindo o mesmo formato {"tipo": ..., "nome": ..., "dicas": [...]}.
-# Responsável por adicionar cartas: Allyn
-# ─────────────────────────────────────────────────────────────────────────────
-
 cartas = [
     {
         "tipo": "LUGAR",
@@ -959,7 +951,7 @@ def pegar_carta():
 
     return sorteada
 
-    TIPOS_VALIDOS = {
+TIPOS_VALIDOS = {
 
     "PESSOA",
 
